@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration>
+    <feed>
+        <lastSeries>
+            <episode>12</episode>
+            <season>09</season>
+        </lastSeries>
+        <url>file:C:/Users/suter/workspace/TorrentFeedProvider/src/test/resources/fullDump.xml</url>
+    </feed>
+</configuration>
