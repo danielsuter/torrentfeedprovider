@@ -49,7 +49,7 @@ dependencies {
 
 task copyToTomcat(type: Copy, dependsOn: war) {
 	from war
-	into 'opt/tomcat/webapps'
+	into '/opt/tomcat/webapps'
 }
 
 cargo {
