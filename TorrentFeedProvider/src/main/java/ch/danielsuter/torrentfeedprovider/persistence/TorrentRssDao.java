@@ -20,13 +20,17 @@ public class TorrentRssDao {
 	}
 
 	public Rss getOrCreate() {
-		File feedFile = new File(FEED_FILENAME);
+		File feedFile = getFeedFile();
 		if (!feedFile.exists()) {
 			createInitialFeed();
 		}
 
 		Rss feed = JAXB.unmarshal(feedFile, Rss.class);
 		return feed;
+	}
+
+	private File getFeedFile() {
+		return new File(System.getProperty("user.home"), FEED_FILENAME);
 	}
 
 	private void createInitialFeed() {
@@ -38,6 +42,6 @@ public class TorrentRssDao {
 	}
 
 	private void writeFeed(Rss rss) {
-		JAXB.marshal(rss, new File(FEED_FILENAME));
+		JAXB.marshal(rss, getFeedFile());
 	}
 }
