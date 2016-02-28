@@ -32,12 +32,13 @@ public class TorrentFeedProvider {
 	public static void main(String[] args) {
 		Configuration config = new Configuration();
 		TorrentFeed feed = new TorrentFeed();
-//		feed.setUrl(
-//				"https://kat.cr/usearch/the%20big%20bang%20theory%201080p%20category%3Atv%20lang_id%3A2%20verified%3A1/?rss=1");
-		feed.setUrl("file:C:/Users/suter/workspace/TorrentFeedProvider/src/test/resources/fullDump.xml");
+		feed.setUrl(
+				"https://kat.cr/usearch/the%20big%20bang%20theory%201080p%20category%3Atv%20lang_id%3A2%20verified%3A1/?rss=1");
+//		feed.setUrl("file:C:/Users/suter/workspace/TorrentFeedProvider/src/test/resources/fullDump.xml");
 		feed.setLastSeries(new Series("09", "01"));
+		feed.setMinContentLength(2243768610L);
 		config.addFeed(feed);
-
+		new ConfigurationDao().write(config);
 
 		Rss torrents = new TorrentFeedProvider().getTorrents();
 
@@ -55,10 +56,11 @@ public class TorrentFeedProvider {
 				logItems(feedItems);
 				
 				List<Item> itemsWithHigherEpisode = filterOlder(feedItems, torrentFeed);
+				List<Item> itemsMatchingMinSize = filterMinSize(feedItems, torrentFeed);
 				logger.debug("Higher episode:");
 				logItems(itemsWithHigherEpisode);
 				
-				Optional<Item> newItem = filterDuplicates(itemsWithHigherEpisode, torrentFeed);
+				Optional<Item> newItem = filterDuplicates(itemsMatchingMinSize, torrentFeed);
 				
 				if (newItem.isPresent()) {
 					torrentRssDao.addItem(torrentFeed, newItem.get());
@@ -100,6 +102,22 @@ public class TorrentFeedProvider {
 				return false;
 			}
 			return series.isNewerThan(lastSeries);
+		}).collect(Collectors.toList());
+	}
+	
+	private List<Item> filterMinSize(List<Item> feedItems, TorrentFeed torrentFeed) {
+		if(torrentFeed.getMinContentLength() == null) {
+			return feedItems;
+		}
+		
+		return feedItems.stream().filter(item -> {
+			if(item.getContentLength() == null) {
+				return false;
+			}
+			if(item.getContentLength() < torrentFeed.getMinContentLength()) {
+				return false;
+			}
+			return true;
 		}).collect(Collectors.toList());
 	}
 }

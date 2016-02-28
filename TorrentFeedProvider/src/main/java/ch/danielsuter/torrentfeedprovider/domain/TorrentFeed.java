@@ -3,7 +3,8 @@ package ch.danielsuter.torrentfeedprovider.domain;
 public class TorrentFeed {
 	private String url;
 	private Series lastSeries;
-
+	private Long minContentLength;
+	
 	public String getUrl() {
 		return url;
 	}
@@ -18,5 +19,13 @@ public class TorrentFeed {
 
 	public void setLastSeries(Series lastSeries) {
 		this.lastSeries = lastSeries;
+	}
+
+	public Long getMinContentLength() {
+		return minContentLength;
+	}
+
+	public void setMinContentLength(Long minContentLength) {
+		this.minContentLength = minContentLength;
 	}
 }	
