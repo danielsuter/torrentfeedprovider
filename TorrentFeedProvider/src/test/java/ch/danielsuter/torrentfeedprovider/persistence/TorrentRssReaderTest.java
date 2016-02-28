@@ -26,6 +26,7 @@ public class TorrentRssReaderTest {
 			Item item = channel.getItems().get(0);
 			assertEquals(23, item.getSeeds().intValue());
 			assertEquals(25, item.getPeers().intValue());
+			assertEquals(259733218, item.getContentLength().intValue());
 		}		
 		
 	}

@@ -9,6 +9,7 @@ public class Item {
 	private Integer seeds;
 	private Integer peers;
 	private Integer verified;
+	private Integer contentLength;
 
 	private Enclosure enclosure;
 
@@ -80,6 +81,14 @@ public class Item {
 
 	public void setVerified(Integer verified) {
 		this.verified = verified;
+	}
+
+	public Integer getContentLength() {
+		return contentLength;
+	}
+
+	public void setContentLength(Integer contentLength) {
+		this.contentLength = contentLength;
 	}
 
 }
