@@ -32,13 +32,13 @@ public class TorrentFeedProvider {
 	public static void main(String[] args) {
 		Configuration config = new Configuration();
 		TorrentFeed feed = new TorrentFeed();
-		feed.setUrl(
-				"https://kat.cr/usearch/the%20big%20bang%20theory%201080p%20category%3Atv%20lang_id%3A2%20verified%3A1/?rss=1");
+//		feed.setUrl(
+//				"https://kat.cr/usearch/the%20big%20bang%20theory%201080p%20category%3Atv%20lang_id%3A2%20verified%3A1/?rss=1");
 //		feed.setUrl("file:C:/Users/suter/workspace/TorrentFeedProvider/src/test/resources/fullDump.xml");
 		feed.setLastSeries(new Series("09", "01"));
 		feed.setMinContentLength(2243768610L);
 		config.addFeed(feed);
-		new ConfigurationDao().write(config);
+//		new ConfigurationDao().write(config);
 
 		Rss torrents = new TorrentFeedProvider().getTorrents();
 
@@ -56,7 +56,7 @@ public class TorrentFeedProvider {
 				logItems(feedItems);
 				
 				List<Item> itemsWithHigherEpisode = filterOlder(feedItems, torrentFeed);
-				List<Item> itemsMatchingMinSize = filterMinSize(feedItems, torrentFeed);
+				List<Item> itemsMatchingMinSize = filterMinSize(itemsWithHigherEpisode, torrentFeed);
 				logger.debug("Higher episode:");
 				logItems(itemsWithHigherEpisode);
 				
